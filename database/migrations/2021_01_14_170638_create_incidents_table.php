@@ -15,6 +15,12 @@ class CreateIncidentsTable extends Migration
     {
         Schema::create('incidents', function (Blueprint $table) {
             $table->id();
+            $table->string('webcad_incident_number');
+            $table->string('type');
+            $table->string('location');
+            $table->string('municipality');
+            $table->dateTime('dispatched_at');
+            $table->string('station');
             $table->timestamps();
         });
     }
