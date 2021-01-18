@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Incident;
 use App\Services\Crawler;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -60,10 +61,9 @@ class ScrapeChescoIncidents implements ShouldQueue
         }
 
         foreach ($this->results as $result) {
-            //dd($result['Dispatch Time']);
-            $dispatched_at = \Carbon\Carbon::createFromFormat('m-d-Y H:i:s', $result['Dispatch Time']);
+            $dispatched_at = Carbon::createFromFormat('m-d-Y H:i:s', $result['Dispatch Time']);
 
-            $i = Incident::firstOrCreate([
+            Incident::firstOrCreate([
                 'incident_number' => $result['Incident No.']['number'],
             ], [
                 'type' => $result['Incident Type'],
